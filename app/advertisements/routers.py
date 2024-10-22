@@ -31,7 +31,7 @@ async def delete_advertisement(advertisement_id: int, service: ServiceDep) -> No
     await service.delete(advertisement_id)
 
 
-@advertisements_router.get("{advertisement_id}", response_model=AdvertisementResponseSchema)
+@advertisements_router.get("/{advertisement_id}", response_model=AdvertisementResponseSchema)
 async def get_advertisement(advertisement_id: int, service: ServiceDep) -> AdvertisementResponseSchema:
     return await service.get(advertisement_id)
 
