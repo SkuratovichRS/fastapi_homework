@@ -11,8 +11,10 @@ class Service:
     def __init__(self, repository: Repository):
         self._repository = repository
 
-    async def create(self, data: CreateAdvertisementRequestSchema) -> AdvertisementResponseSchema:
-        advertisement = await self._repository.create(data.model_dump())
+    async def create(self, author_id: int, data: CreateAdvertisementRequestSchema) -> AdvertisementResponseSchema:
+        validated_data = data.model_dump()
+        validated_data["author_id"] = author_id
+        advertisement = await self._repository.create(validated_data)
         return AdvertisementResponseSchema.model_validate(advertisement, from_attributes=True)
 
     async def update(
@@ -36,4 +38,7 @@ class Service:
 
     async def search(self, data: AdvertisementFiltersSchema) -> list[AdvertisementResponseSchema]:
         advertisements = await self._repository.search(**data.model_dump(exclude_none=True))
-        return [AdvertisementResponseSchema.model_validate(advertisement, from_attributes=True) for advertisement in advertisements]
+        return [
+            AdvertisementResponseSchema.model_validate(advertisement, from_attributes=True)
+            for advertisement in advertisements
+        ]

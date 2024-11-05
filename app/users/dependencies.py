@@ -3,9 +3,9 @@ from typing import Annotated
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.advertisements.repository import Repository
-from app.advertisements.service import Service
 from app.core.dependencies import get_session
+from app.users.repository import Repository
+from app.users.service import Service
 
 
 def get_repository(session: AsyncSession = Depends(get_session)) -> Repository:
@@ -16,5 +16,4 @@ def get_service(repository: Repository = Depends(get_repository)) -> Service:
     return Service(repository)
 
 
-AdvServiceDep = Annotated[Service, Depends(get_service)]
-
+UsersServiceDep = Annotated[Service, Depends(get_service)]

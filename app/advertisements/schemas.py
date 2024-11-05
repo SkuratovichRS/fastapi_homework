@@ -8,12 +8,13 @@ class CreateAdvertisementRequestSchema(BaseModel):
     title: str
     description: str
     price: Decimal
-    author_id: int
+
 
 class UpdateAdvertisementRequestSchema(BaseModel):
     title: str | None = None
     description: str | None = None
     price: Decimal | None = None
+
 
 class AdvertisementResponseSchema(BaseModel):
     id: int
@@ -30,4 +31,3 @@ class AdvertisementFiltersSchema(BaseModel):
     price: Decimal | None = None
     author_id: int | None = None
     created_at: datetime | None = None
-
